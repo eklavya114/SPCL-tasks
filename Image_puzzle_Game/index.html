@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Puzzle Master</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Using Google Fonts for a modern, playful feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>Puzzle Master</h1>
+            <p class="subtitle">Piece together your world, one tile at a time!</p>
+        </header>
+
+        <main id="main-content">
+            <!-- Setup Screen -->
+            <section id="setup-screen" class="screen active">
+                <div class="options-layout">
+                    <div class="option-card card">
+                        <h2>🎨 Create Your Own</h2>
+                        <label for="image-upload" class="button-style primary-button upload-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            Upload Image
+                        </label>
+                        <input type="file" id="image-upload" accept="image/*">
+                        <div class="image-preview-wrapper">
+                            <img id="image-preview" src="#" alt="Your uploaded image preview" class="hidden">
+                        </div>
+                        <div class="difficulty-control">
+                            <label for="difficulty-select">Difficulty:</label>
+                            <select id="difficulty-select">
+                                <option value="3">Easy (3x3)</option>
+                                <option value="4" selected>Medium (4x4)</option>
+                                <option value="5">Hard (5x5)</option>
+                            </select>
+                        </div>
+                        <button id="start-game-button" class="button-style primary-button hidden">Start Game</button>
+                    </div>
+                </div>
+
+                <div class="sample-puzzles-section card">
+                    <h2>✨ Or Try These Samples</h2>
+                    <div id="sample-puzzles-grid" class="sample-images-grid">
+                        <!-- Sample puzzle images will be injected by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Game Screen -->
+            <section id="game-screen" class="screen">
+                <div class="game-info-bar">
+                    <div class="info-item">Moves: <span id="moves-count">0</span></div>
+                    <div class="info-item">Time: <span id="timer">00:00</span></div>
+                </div>
+                <div id="puzzle-area">
+                    <!-- Full image for breakup animation -->
+                    <img id="full-image-for-breakup" src="#" alt="Full puzzle image" class="hidden">
+                    <!-- Grid for puzzle tiles -->
+                    <div id="puzzle-grid-container">
+                        <!-- Tiles will be injected here -->
+                    </div>
+                </div>
+                <button id="quit-to-menu-button" class="button-style secondary-button">Back to Menu</button>
+            </section>
+        </main>
+
+        <!-- Congratulations Modal -->
+        <div id="congrats-modal" class="modal-overlay hidden">
+            <div class="modal-content card">
+                <span class="modal-close-button">×</span>
+                <div class="modal-icon">🎉</div>
+                <h2>Congratulations!</h2>
+                <p>You've successfully solved the puzzle!</p>
+                <div class="final-stats">
+                    <p>Difficulty: <span id="final-difficulty"></span></p>
+                    <p>Moves: <span id="final-moves">0</span></p>
+                    <p>Time: <span id="final-time">00:00</span></p>
+                </div>
+                <button id="play-another-button" class="button-style primary-button">Play Another Puzzle</button>
+                <div class="modal-sample-suggestion">
+                    <h3>Try another?</h3>
+                    <div id="modal-sample-grid" class="sample-images-grid mini">
+                        <!-- Sample puzzle images for modal will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

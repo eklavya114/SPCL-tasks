@@ -1,0 +1,314 @@
+:root {
+    --font-body: 'Poppins', sans-serif;
+    --font-heading: 'Fredoka One', cursive;
+    
+    --color-primary: #ff7043; /* Coral */
+    --color-primary-dark: #f4511e;
+    --color-secondary: #26a69a; /* Teal */
+    --color-secondary-dark: #00897b;
+    --color-background: #eef3f7; /* Light blueish grey */
+    --color-surface: #ffffff;
+    --color-text-primary: #2c3e50; /* Dark blue/grey */
+    --color-text-secondary: #7f8c8d; /* Medium grey */
+    --color-border: #dce4ec;
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
+    --border-radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top for scrolling */
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden; /* Prevent horizontal scroll from animations */
+}
+
+.game-container {
+    width: 100%;
+    max-width: 800px; /* Max width of the game interface */
+    text-align: center;
+}
+
+header {
+    margin-bottom: 30px;
+}
+header h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.8rem, 7vw, 4rem); /* Responsive font size */
+    color: var(--color-primary);
+    margin-bottom: 0.2em;
+    text-shadow: 2px 2px 0 var(--color-secondary_trans, hsla(174,63%,40%,0.2));
+}
+header .subtitle {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    color: var(--color-text-secondary);
+}
+
+.screen { display: none; }
+.screen.active { display: block; animation: screenFadeIn 0.5s ease-out forwards; }
+@keyframes screenFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    background-color: var(--color-surface);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 25px;
+    border: 1px solid var(--color-border);
+}
+.card h2 {
+    font-family: var(--font-heading);
+    color: var(--color-secondary);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.options-layout {
+    display: grid;
+    grid-template-columns: 1fr; /* Stack on mobile */
+    gap: 20px;
+}
+@media (min-width: 600px) { /* Side-by-side on larger screens */
+    .options-layout { grid-template-columns: 1fr; } /* Keeping it stacked for simplicity in this example, can be 1fr 1fr */
+}
+
+.option-card .button-style.upload-label { margin-bottom: 15px; }
+#image-upload { display: none; } /* Hide default file input */
+
+.image-preview-wrapper {
+    width: 100%;
+    max-width: 300px;
+    min-height: 150px; /* Placeholder space */
+    border: 2px dashed var(--color-border);
+    border-radius: 8px;
+    margin: 0 auto 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensure image fits */
+}
+#image-preview {
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain; /* Changed to contain to see full preview */
+    border-radius: 6px;
+}
+#image-preview.hidden { display: none; }
+
+.difficulty-control { margin: 20px 0; }
+.difficulty-control label { margin-right: 10px; font-weight: 600; }
+#difficulty-select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    background-color: var(--color-surface);
+}
+
+.button-style {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    box-shadow: var(--shadow-soft);
+}
+.button-style:hover { transform: translateY(-2px); box-shadow: var(--shadow-medium); }
+.button-style:active { transform: translateY(0px); box-shadow: var(--shadow-soft); }
+.button-style.primary-button { background-color: var(--color-primary); color: white; }
+.button-style.primary-button:hover { background-color: var(--color-primary-dark); }
+.button-style.secondary-button { background-color: var(--color-secondary); color: white; }
+.button-style.secondary-button:hover { background-color: var(--color-secondary-dark); }
+.button-style.hidden { display: none !important; } /* Use !important to override inline-flex if needed */
+
+.sample-puzzles-section { margin-top: 30px; }
+.sample-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+}
+.sample-images-grid img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.sample-images-grid img:hover {
+    transform: scale(1.05);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-medium);
+}
+.sample-images-grid.mini img { height: 70px; }
+
+
+/* Game Screen Styles */
+#game-screen { max-width: 550px; margin: 0 auto; } /* Control puzzle area width */
+.game-info-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 20px;
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.info-item span { color: var(--color-primary); }
+
+#puzzle-area {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* For 1:1 Aspect Ratio, adjust if needed */
+    margin-bottom: 20px;
+    background-color: var(--color-border); /* Placeholder for empty grid */
+    border-radius: 8px;
+    overflow: hidden; /* Crucial for breakup animation and tile containment */
+}
+
+#full-image-for-breakup {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: contain; /* Show full image before it breaks */
+    z-index: 10; /* Above grid initially */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+#full-image-for-breakup.breaking-up {
+    opacity: 0;
+    transform: scale(1.5); /* Example effect */
+}
+
+#puzzle-grid-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: grid;
+    border: 3px solid var(--color-secondary);
+    border-radius: 8px; /* Match parent if overflow is visible */
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1); /* Inner shadow for depth */
+}
+
+.puzzle-tile {
+    background-repeat: no-repeat;
+    /* border: 1px solid var(--color-border); */ /* Can make it look too busy */
+    border: 0.5px solid rgba(0,0,0,0.1); /* Very subtle border */
+    box-sizing: border-box;
+    cursor: grab;
+    user-select: none; /* Prevent text selection on drag */
+    will-change: transform, opacity; /* Performance hint for animations */
+    
+    /* Initial state for breakup animation */
+    opacity: 0;
+    transform-origin: center center; /* For scaling/rotation from center */
+    /* transform: scale(0) rotate(0deg); */ /* Initial state for breakup */
+}
+/* Class added during breakup animation */
+.puzzle-tile.breaking-in {
+    animation: tileBreakIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: var(--animation-delay, 0s); /* Staggered delay */
+}
+@keyframes tileBreakIn {
+    0% { opacity: 0; transform: scale(0.3) rotate(-45deg) translate(var(--translateX, 0px), var(--translateY, 0px)); }
+    60% { opacity: 1; transform: scale(1.1) rotate(10deg) translate(0,0); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg) translate(0,0); }
+}
+
+.puzzle-tile:hover:not(.dragging) {
+    box-shadow: 0 0 0 3px var(--color-primary);
+    z-index: 5; /* Bring to front */
+    transform: scale(1.03) !important; /* Override ongoing animations if any */
+}
+.puzzle-tile.dragging {
+    opacity: 0.6 !important; /* Ensure visibility */
+    transform: scale(1.1) rotate(2deg) !important;
+    box-shadow: var(--shadow-medium);
+    z-index: 1000; /* Above all other tiles */
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(44, 62, 80, 0.8); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s linear;
+}
+.modal-overlay:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+.modal-content { /* Uses .card styling */
+    position: relative;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
+.modal-icon { font-size: 3rem; margin-bottom: 10px; }
+.modal-content h2 { font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;}
+.modal-content p { color: var(--color-text-secondary); margin-bottom: 8px; }
+.final-stats { margin: 15px 0; font-size: 1.1rem; }
+.final-stats p span { font-weight: bold; color: var(--color-text-primary); }
+#play-another-button { margin-top: 15px; }
+.modal-sample-suggestion { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--color-border); }
+.modal-sample-suggestion h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--color-secondary); }
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.8rem;
+    color: var(--color-text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+.modal-close-button:hover { color: var(--color-text-primary); }
+
+/* Utility */
+.hidden { display: none !important; }
+
+/* Responsiveness */
+@media (max-width: 600px) {
+    body { padding: 15px; }
+    header h1 { font-size: 2.5rem; }
+    .card { padding: 20px; }
+    .button-style { font-size: 0.95rem; padding: 10px 20px; }
+    .game-info-bar { font-size: 1rem; padding: 10px; }
+}
